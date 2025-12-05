@@ -1167,12 +1167,6 @@ a:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.modo-oscuro a[href] {
-    color: #ffd700 !important; 
-    text-decoration: underline !important;
-    background: transparent !important; 
-}
-
 
 .modo-oscuro .nombre-auto {
     color: #e0e0e0 !important;
@@ -1526,6 +1520,7 @@ a:hover {
 .modo-oscuro .caracteristica-item strong {
     color: #ffffff !important;
 }
+
 
 
 
