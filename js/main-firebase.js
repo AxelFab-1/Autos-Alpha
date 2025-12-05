@@ -99,20 +99,28 @@ function actualizarContadorUI(numero) {
     const header = document.querySelector('.header-container');
     let div = document.getElementById('contador-visitas');
 
+    // Si por error borraste el HTML, JS lo crea con TU diseño original (Respaldo)
     if (!div && header) {
         div = document.createElement('div');
         div.id = 'contador-visitas';
+        // AQUÍ ESTÁN TUS ESTILOS ORIGINALES RESTAURADOS:
         div.style.cssText = `
-            position: absolute; top: 60px; right: 20px; 
-            background: rgba(44, 62, 80, 0.9); color: white; 
-            padding: 5px 12px; border-radius: 15px; font-size: 11px; 
-            z-index: 90; border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: all 0.3s;
+            position: absolute; 
+            top: 10px; 
+            right: 300px; 
+            background: #27ae60; 
+            color: white; 
+            padding: 5px 10px; 
+            border-radius: 10px; 
+            font-size: 12px; 
+            z-index: 90;
         `;
         header.appendChild(div);
     }
+
+    // Solo actualizamos el texto
     if (div) {
-        div.innerHTML = `🌎 Visitas Globales: <strong>${numero.toLocaleString()}</strong>`;
+        div.innerHTML = `👥 Visitantes: ${numero.toLocaleString()}`;
     }
 }
 
@@ -255,4 +263,5 @@ function inicializarFormularioPruebaManejo() {
             this.reset();
         });
     }
+
 }
