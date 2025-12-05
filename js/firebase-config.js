@@ -4,7 +4,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 // Agregamos funciones de Query (where, query)
-import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, where } 
+import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, where, updateDoc, setDoc, getDoc, increment } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // --- PEGA AQUÍ TUS DATOS DE FIREBASE ---
@@ -28,5 +28,6 @@ export {
     db, auth, provider, 
     collection, addDoc, onSnapshot, deleteDoc, doc, 
     signInWithPopup, signOut, onAuthStateChanged,
-    query, where // Importante para filtrar
+    query, where, updateDoc, setDoc, getDoc, increment // Importante para filtrar
 };
+
