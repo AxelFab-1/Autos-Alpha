@@ -8,6 +8,8 @@ import {
     db, doc, updateDoc, setDoc, increment, onSnapshot 
 } from './firebase-config.js';
 
+import { inicializarFavoritos } from './favoritos-firebase.js';
+
 // ============================================
 // FUNCIONES GLOBALES
 // ============================================
@@ -58,6 +60,7 @@ function inicializarFuncionalidades() {
     inicializarAnimacionesScroll();
     inicializarValidacionFormulario();
     inicializarFormularioPruebaManejo();
+    inicializarFavoritos();
 
     // Firebase
     configurarLoginGlobal();
@@ -265,3 +268,4 @@ function inicializarFormularioPruebaManejo() {
     }
 
 }
+
