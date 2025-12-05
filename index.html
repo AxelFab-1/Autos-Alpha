@@ -254,47 +254,70 @@
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0;">
     
     <div class="calendario-citas" id="calendario-citas">
-    <h3 style="color: #a83246; margin-top: 0;">📅 Agendar Cita Online</h3>
-    <p>Selecciona la fecha y horario para tu visita.</p>
     
-    <div class="selector-fecha">
-        <label for="fecha-cita" style="font-weight: bold;">Selecciona una fecha:</label>
-        <input type="date" id="fecha-cita" class="calculadora-input" style="margin-top: 5px;">
-    </div>
-    
-    <div class="horarios-disponibles" id="horarios-disponibles">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="color: #a83246; margin: 0;">📅 Agendar Cita Online</h3>
+        
+        <div id="usuario-info" style="display: none; align-items: center; gap: 10px; background: #fff; padding: 5px 10px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <img id="foto-usuario" src="" alt="Foto" style="width: 30px; height: 30px; border-radius: 50%;">
+            <span id="nombre-usuario" style="font-size: 14px; font-weight: bold; color: #333;">Usuario</span>
+            <button id="btn-logout" style="font-size: 12px; padding: 5px 10px; background: #e74c3c; color: white; border: none; border-radius: 15px; cursor: pointer;">Salir</button>
         </div>
-    
-    <div id="formulario-cita" style="display: none; margin-top: 20px; background: #fff; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
-        <h4 style="margin-top: 0; color: #a83246;">Confirmar Datos</h4>
-        <form id="formCita">
-            <div style="margin-bottom: 10px;">
-                <label style="display:block; font-size:12px; margin-bottom:3px;">Nombre completo:</label>
-                <input type="text" id="cita-nombre" required class="calculadora-input" placeholder="Tu nombre">
-            </div>
-            <div style="margin-bottom: 10px;">
-                <label style="display:block; font-size:12px; margin-bottom:3px;">Teléfono:</label>
-                <input type="tel" id="cita-telefono" required class="calculadora-input" placeholder="999 999 999">
-            </div>
-            <div style="margin-bottom: 10px;">
-                <label style="display:block; font-size:12px; margin-bottom:3px;">Motivo:</label>
-                <select id="cita-motivo" class="calculadora-input">
-                    <option value="Prueba de Manejo">Prueba de Manejo</option>
-                    <option value="Cotización">Cotización / Financiamiento</option>
-                    <option value="Servicio Técnico">Servicio Técnico</option>
-                </select>
-            </div>
-            <button type="submit" class="calculadora-button" style="width: 100%;">✅ Confirmar Agendamiento</button>
-        </form>
     </div>
 
-    <div style="margin-top: 30px; border-top: 2px solid #e0e0e0; padding-top: 20px;">
-        <h4 style="color: #2c3e50; margin-bottom: 10px;">📋 Mis Citas Programadas</h4>
-        <div id="mis-citas-guardadas">
+    <div id="pantalla-login" style="text-align: center; padding: 40px 20px; background: white; border-radius: 10px; border: 1px dashed #ccc;">
+        <p style="margin-bottom: 20px; color: #555; font-size: 16px;">
+            🔒 Para proteger tus datos y ver tus citas guardadas,<br>por favor inicia sesión.
+        </p>
+        <button id="btn-login-google" style="background: white; color: #444; border: 1px solid #ddd; padding: 12px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" alt="G">
+            Iniciar sesión con Google
+        </button>
+    </div>
+
+    <div id="contenido-calendario" style="display: none;">
+        <p>Selecciona la fecha y horario para tu visita.</p>
+        
+        <div class="selector-fecha">
+            <label for="fecha-cita" style="font-weight: bold;">Selecciona una fecha:</label>
+            <input type="date" id="fecha-cita" class="calculadora-input" style="margin-top: 5px;">
+        </div>
+        
+        <div class="horarios-disponibles" id="horarios-disponibles">
             </div>
+        
+        <div id="formulario-cita" style="display: none; margin-top: 20px; background: #fff; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+            <h4 style="margin-top: 0; color: #a83246;">Confirmar Datos</h4>
+            <form id="formCita">
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px;">Nombre:</label>
+                    <input type="text" id="cita-nombre" required class="calculadora-input" readonly style="background: #f0f0f0;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px;">Teléfono:</label>
+                    <input type="tel" id="cita-telefono" required class="calculadora-input" placeholder="999 999 999">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label style="font-size: 12px;">Motivo:</label>
+                    <select id="cita-motivo" class="calculadora-input">
+                        <option value="Prueba de Manejo">Prueba de Manejo</option>
+                        <option value="Cotización">Cotización</option>
+                        <option value="Servicio Técnico">Servicio Técnico</option>
+                    </select>
+                </div>
+                <button type="submit" class="calculadora-button" style="width: 100%;">✅ Confirmar Cita Privada</button>
+            </form>
+        </div>
+
+        <div style="margin-top: 30px; border-top: 2px solid #e0e0e0; padding-top: 20px;">
+            <h4 style="color: #2c3e50; margin-bottom: 10px;">📋 Mis Citas Guardadas</h4>
+            <div id="mis-citas-guardadas">
+                </div>
+        </div>
     </div>
 </div>
 
+    
     <div class="sistema-pagos">
         <h3 style="color: #a83246;">💳 Mis Formas de Pago</h3>
         <p style="font-size: 14px;">Gestiona tus tarjetas para apartar vehículos rápidamente.</p>
