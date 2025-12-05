@@ -1529,4 +1529,19 @@ a:hover {
 }
 
 
+   /* 🟢 CORRECCIÓN CLAVE: Asegura que TODAS las tarjetas sean legibles */
+.modo-oscuro .especificacion-item,
+.modo-oscuro .caracteristica-item {
+    background: #3d3d3d !important; /* Fondo oscuro de las tarjetas */
+    border-color: #555 !important;
+}
+
+/* 🟢 CORRECCIÓN CLAVE: Fuerza a blanco todos los textos dentro de las tarjetas */
+.modo-oscuro .especificacion-item *,
+.modo-oscuro .caracteristica-item * {
+    color: #ffffff !important; /* ¡Esto arregla las letras oscuras! */
+}
+
+
+
 
