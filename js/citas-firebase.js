@@ -18,7 +18,7 @@ function inicializarCalendarioCitas() {
     const hoy = new Date().toISOString().split('T')[0];
     fechaInput.min = hoy;
 
-    // 1. ESCUCHADOR DE SESIÓN (El Cerebro)
+    
     // Este código se ejecuta automáticamente cuando detecta que entraste con Google
     onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -64,12 +64,12 @@ function inicializarCalendarioCitas() {
     });
 }
 
-// --- CARGAR CITAS (Solo las mías) ---
+// --- CARGAR CITAS (únicamente las mías) ---
 function cargarCitasPrivadas(uid) {
     const contenedor = document.getElementById('mis-citas-guardadas');
     if(!contenedor) return;
 
-    // QUERY: Dame las citas donde el campo "uid" sea igual a MI ID
+    // Nos da las citas donde el campo "uid" sea igual a MI ID
     const q = query(collection(db, "citas"), where("uid", "==", uid));
 
     // Suscripción en tiempo real
@@ -89,12 +89,12 @@ function cargarCitasPrivadas(uid) {
             return;
         }
 
-        // Ordenar por fecha
+        // Ordenamos por fecha
         citas.sort((a, b) => new Date(a.fecha + 'T' + a.hora) - new Date(b.fecha + 'T' + b.hora));
         
         citas.forEach(cita => {
             const div = document.createElement('div');
-            div.className = 'cita-card'; // Clase CSS para modo oscuro
+            div.className = 'cita-card'; 
             
             div.innerHTML = `
                 <div>
@@ -211,3 +211,4 @@ function generarHorarios(fecha) {
 
 // Iniciar script
 inicializarCalendarioCitas();
+
