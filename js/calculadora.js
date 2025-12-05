@@ -9,7 +9,7 @@ function calcularFinanciamiento() {
     const plazo = parseInt(document.getElementById('plazo-meses').value);
     const tasaAnual = parseFloat(document.getElementById('tasa-interes').value);
 
-if (precio < 10000 || isNaN(precio)) { 
+if (precio < 42000 || isNaN(precio)) { 
         const resultado = document.getElementById('resultado-financiamiento');
         resultado.innerHTML = `
             <div style="background: #fce7e7; padding: 20px; border-radius: 8px; color: #e74c3c; border-left: 4px solid #e74c3c;">
@@ -88,3 +88,4 @@ function calcularFinanciamientoAuto(autoId) {
     `;
 
 }
+
