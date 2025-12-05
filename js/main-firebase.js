@@ -61,14 +61,11 @@ function inicializarFuncionalidades() {
     inicializarValidacionFormulario();
     inicializarFormularioPruebaManejo();
     inicializarFavoritos();
-
-    // Firebase
     configurarLoginGlobal();
-    
-    // --- AQUÍ ESTÁ EL NUEVO CONTADOR GLOBAL ---
     inicializarContadorGlobal(); 
+    inicializarContacto();
 }
-inicializarContacto();
+
 
 // ============================================
 // NUEVO: CONTADOR DE VISITAS GLOBAL (EN LA NUBE) ☁️
@@ -239,4 +236,5 @@ function inicializarFormularioPruebaManejo() {
     }
 
 }
+
 
