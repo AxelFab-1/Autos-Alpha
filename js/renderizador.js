@@ -41,11 +41,9 @@ function renderizarCatalogo() {
         const contenedorTabla = document.getElementById(idTabla);
 
         if (contenedorTabla) {
-            // Extraemos el año del nombre (ejemplo: "Toyota Corolla 2024" -> "2024")
             const añoMatch = auto.modelo.match(/\d{4}/);
             const año = añoMatch ? añoMatch[0] : '2024';
             
-            // Limpiamos el nombre para que no se repita la marca (ejemplo: "Toyota Corolla" -> "Corolla")
             let nombreLimpio = auto.modelo.replace(auto.marca, '').replace(año, '').trim();
             if(!nombreLimpio) nombreLimpio = auto.modelo; 
 
@@ -63,6 +61,7 @@ function renderizarCatalogo() {
     });
 
 }
+
 
 
 
