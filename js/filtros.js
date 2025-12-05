@@ -9,7 +9,7 @@ function inicializarFiltros() {
         const tabla = marca.querySelector('table');
         const titulo = marca.querySelector('.marca-titulo').textContent;
         
-        // Crear contenedor de filtros
+        // Creamos contenedor de filtros
         const filtroHTML = `
             <div class="filtro-container" style="margin: 15px 0; display: flex; gap: 10px; align-items: center;">
                 <input type="text" id="filtro-${titulo.toLowerCase()}" placeholder="Filtrar modelos de ${titulo}..." 
@@ -35,7 +35,7 @@ function filtrarTabla(tabla, texto) {
     const filas = tabla.querySelectorAll('tr');
     texto = texto.toLowerCase();
     
-    // Empezar desde la fila 1 para saltar los encabezados
+    // Empezamos desde la fila 1 para saltar los encabezados
     for (let i = 1; i < filas.length; i++) {
         const fila = filas[i];
         const celdas = fila.querySelectorAll('td');
@@ -63,4 +63,5 @@ function limpiarFiltro(marca) {
         const filas = tabla.querySelectorAll('tr');
         filas.forEach(fila => fila.style.display = '');
     }
+
 }
