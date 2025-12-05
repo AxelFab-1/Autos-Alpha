@@ -16,8 +16,7 @@ export function inicializarContacto() {
         // 1. VALIDAR SI HAY SESIÓN INICIADA
         const user = auth.currentUser;
         if (!user) {
-            alert("🔒 Para enviar el cuestionario, por favor inicia sesión arriba.");
-            /* Opcional: Scroll suave hacia el botón de login
+            alert("Para enviar el cuestionario, por favor inicia sesión.");
             document.querySelector('.header-container').scrollIntoView({ behavior: 'smooth' }); */
             return;
         }
@@ -62,8 +61,8 @@ export function inicializarContacto() {
                     marcaInteres: marcaSelect.value,
                     presupuesto: presupuestoSelect.value,
                     comentario: comentariosInput.value,
-                    fecha: new Date(), // Cuándo lo envió
-                    estado: "Nuevo" // Para que el admin sepa que no lo ha leído
+                    fecha: new Date(), 
+                    estado: "Nuevo"
                 });
 
                 // Éxito
