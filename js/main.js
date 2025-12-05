@@ -2,9 +2,8 @@
 // AUTOS ALPHA - FUNCIONES PRINCIPALES (MAIN)
 // ============================================
 
-// Función para Flip Cards (Girar tarjeta)
+// Función para Flip Cards, especificamente (Girar tarjeta)
 function toggleFlip(card) {
-    // Remover la clase 'flipped' de todos los flip cards primero
     document.querySelectorAll('.imagen-auto').forEach(otherCard => {
         if (otherCard !== card) {
             otherCard.classList.remove('flipped');
@@ -17,7 +16,7 @@ function toggleFlip(card) {
 
 // Ventana de bienvenida al cargar
 window.addEventListener('load', function() {
-    // Reemplazamos el 'alert' molesto por una notificación elegante
+
     setTimeout(() => {
         mostrarNotificacion('👋 ¡Bienvenido a Autos Alpha! Descubre nuestras ofertas.');
         
@@ -31,25 +30,23 @@ window.addEventListener('load', function() {
     inicializarFuncionalidades();
 });
 
-// =====================================================
-// AQUÍ ESTÁ EL CAMBIO IMPORTANTE
-// =====================================================
+
 function inicializarFuncionalidades() {  
-    // 1. PASO CRÍTICO: Generar el HTML de los autos primero
+    // 1. Generamos el HTML de los autos 
     if (typeof renderizarCatalogo === 'function') {
         renderizarCatalogo(); 
     } else {
         console.error("⚠️ Error: No se encontró la función renderizarCatalogo(). Verifica que importaste js/renderizador.js en el HTML.");
     }
 
-    // 2. Una vez que el HTML existe, inicializamos lo demás
+    // 2. nicializamos lo demás
     if (typeof inicializarFiltros === 'function') inicializarFiltros();
     if (typeof inicializarFavoritos === 'function') inicializarFavoritos();
     if (typeof inicializarContadorOferta === 'function') inicializarContadorOferta();
     if (typeof inicializarCalendarioCitas === 'function') inicializarCalendarioCitas();
     if (typeof inicializarSistemaPagos === 'function') inicializarSistemaPagos();
 
-    // 3. Inicializar el resto de herramientas
+    // 3. Inicializamos el resto de las herramientas
     inicializarModoOscuro();
     inicializarAnimacionesScroll();
     inicializarContadorVisitas();
@@ -57,14 +54,14 @@ function inicializarFuncionalidades() {
     inicializarValidacionFormulario();
 }
 
-// Animaciones al scroll (Intersection Observer)
+// Animaciones al scroll 
 function inicializarAnimacionesScroll() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
                 entry.target.style.transform = 'translateY(0)';
-                // Dejamos de observar para ahorrar recursos
+                // En esta parte dejamos de observar para ahorrar recursos
                 observer.unobserve(entry.target);
             }
         });
@@ -87,7 +84,7 @@ function inicializarContadorVisitas() {
     
     const header = document.querySelector('.header-container');
     if (header) {
-        // Verificar si ya existe el contador para no duplicarlo
+        // Verificamos si ya existe el contador para no duplicarlo
         if(!document.getElementById('contador-visitas')) {
             const contadorHTML = `
                 <div id="contador-visitas" style="position: absolute; top: 10px; right: 300px; background: #27ae60; color: white; 
@@ -197,7 +194,7 @@ function inicializarValidacionFormulario() {
         nombreInput.classList.remove('input-error');
         emailInput.classList.remove('input-error');
         feedbackDiv.textContent = '';
-        feedbackDiv.className = ''; // Limpiar clases de feedback
+        feedbackDiv.className = ''; 
 
         let esValido = true;
 
@@ -221,4 +218,5 @@ function inicializarValidacionFormulario() {
             feedbackDiv.classList.add('feedback-error');
         }
     });
+
 }
