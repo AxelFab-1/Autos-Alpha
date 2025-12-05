@@ -28,7 +28,8 @@ function renderizarCatalogo() {
                             <div class="info-item"><span class="info-label">Transmisión:</span> ${auto.especificaciones.transmision}</div>
                             <div class="info-item"><span class="info-label">Precio:</span> ${auto.precio}</div>
                             
-                            <button onclick="event.stopPropagation(); mostrarDetalleAuto('${idAuto}')" class="boton-detalle-card">
+                            <button onclick="event.stopPropagation(); mostrarDetalleAuto('${idAuto}')" 
+                                    style="margin-top: 15px; background: white; color: #a73246; border: none; padding: 5px 15px; border-radius: 20px; font-weight: bold; cursor: pointer;">
                                 + Ver Detalle
                             </button>
                         </div>
@@ -66,3 +67,4 @@ function renderizarCatalogo() {
     });
 
 }
+
