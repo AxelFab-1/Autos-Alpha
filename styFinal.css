@@ -1167,9 +1167,9 @@ a:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.modo-oscuro .flip-card-back .enlace-detalle {
+.modo-oscuro a[href] {
     color: #ffd700 !important; 
-    text-decoration: underline !important; 
+    text-decoration: underline !important;
     background: transparent !important; 
 }
 
@@ -1526,6 +1526,7 @@ a:hover {
 .modo-oscuro .caracteristica-item strong {
     color: #ffffff !important;
 }
+
 
 
 
