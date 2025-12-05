@@ -3,7 +3,7 @@
 // ============================================
 
 function inicializarFavoritos() {
-    // Agregar botones de favoritos a cada vehículo
+    // Agregamos botones de favoritos a cada vehículo
     document.querySelectorAll('.flip-card-front').forEach(card => {
         const botonFavorito = document.createElement('button');
         botonFavorito.innerHTML = '🤍';
@@ -32,7 +32,7 @@ function inicializarFavoritos() {
         card.style.position = 'relative';
         card.appendChild(botonFavorito);
         
-        // Verificar si ya es favorito
+        // Verificamos si ya es favorito
         const nombre = card.querySelector('.nombre-auto').textContent;
         if (localStorage.getItem(`favorito-${nombre}`)) {
             botonFavorito.innerHTML = '❤️';
@@ -123,13 +123,12 @@ function removerFavorito(nombre) {
     // 2. Actualizamos la lista visual de abajo
     actualizarFavoritos();
 
-    // 3. ¡AQUÍ ESTÁ EL ARREGLO! 
-    // Buscamos todas las tarjetas en la pantalla
+    // 3. Buscamos todas las tarjetas en la pantalla
     document.querySelectorAll('.flip-card-front').forEach(card => {
         // Obtenemos el nombre del auto de esa tarjeta
         const nombreEnTarjeta = card.querySelector('.nombre-auto').textContent;
         
-        // Si el nombre coincide con el que acabamos de borrar...
+        // Si el nombre coincide con el que acabamos de borrar
         if (nombreEnTarjeta === nombre) {
             // Buscamos el botón de corazón dentro de esa tarjeta
             const boton = card.querySelector('.boton-favorito');
@@ -140,4 +139,5 @@ function removerFavorito(nombre) {
     });
     
     mostrarNotificacion(`❌ ${nombre} removido de favoritos`);
+
 }
