@@ -1521,25 +1521,7 @@ a:hover {
     color: #ffffff !important;
 }
 
-.boton-detalle-card {
-    /* Propiedades que no cambian de modo */
-    margin-top: 15px; 
-    border: none; 
-    padding: 5px 15px; 
-    border-radius: 20px; 
-    font-weight: bold; 
-    cursor: pointer;
-    transition: all 0.3s ease; 
-    
-    /* Colores del Modo Claro / por Defecto */
-    background: white; 
-    color: #a83246; 
-}
-/* No olvides el hover general */
-.boton-detalle-card:hover {
-    background: #f0f0f0;
-    transform: scale(1.05);
-}
+
 
 
 
