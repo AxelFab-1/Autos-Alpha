@@ -9,7 +9,7 @@ import {
 } from './firebase-config.js';
 
 import { inicializarFavoritos } from './favoritos-firebase.js';
-
+import { inicializarContacto } from './contacto-firebase.js';
 // ============================================
 // FUNCIONES GLOBALES
 // ============================================
@@ -55,18 +55,16 @@ window.addEventListener('load', function() {
 
 function inicializarFuncionalidades() {  
     // Herramientas visuales
-    if (typeof inicializarFiltros === 'function') inicializarFiltros();
+    if (typeof inicializarFiltros === 'function') 
+    inicializarContadorGlobal();
+    configurarLoginGlobal();
+    inicializarFiltros();
     inicializarModoOscuro();
     inicializarAnimacionesScroll();
     inicializarValidacionFormulario();
     inicializarFormularioPruebaManejo();
     inicializarFavoritos();
-
-    // Firebase
-    configurarLoginGlobal();
-    
-    // --- AQUÍ ESTÁ EL NUEVO CONTADOR GLOBAL ---
-    inicializarContadorGlobal(); 
+    inicializarContacto();
 }
 
 // ============================================
@@ -226,40 +224,6 @@ function desactivarModoOscuro() {
     localStorage.setItem('modo-oscuro', 'false');
 }
 
-function inicializarValidacionFormulario() {
-    const form = document.getElementById('formulario-contacto');
-    const feedbackDiv = document.getElementById('feedback-mensaje');
-    if (!form) return;
-
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const nombreInput = document.getElementById('nombre-input');
-        const emailInput = document.getElementById('email-input');
-
-        nombreInput.classList.remove('input-error');
-        emailInput.classList.remove('input-error');
-        if(feedbackDiv) { feedbackDiv.textContent = ''; feedbackDiv.className = ''; }
-
-        let esValido = true;
-        if (nombreInput.value.trim() === '') { nombreInput.classList.add('input-error'); esValido = false; }
-        if (emailInput.value.trim() === '' || !emailInput.value.includes('@')) { emailInput.classList.add('input-error'); esValido = false; }
-
-        if (esValido) {
-            if(feedbackDiv) {
-                feedbackDiv.textContent = '✅ Mensaje enviado.';
-                feedbackDiv.classList.add('feedback-exito');
-            }
-            form.reset();
-            window.mostrarNotificacion('✅ Correo enviado');
-        } else {
-            if(feedbackDiv) {
-                feedbackDiv.textContent = '❌ Corrige los errores.';
-                feedbackDiv.classList.add('feedback-error');
-            }
-        }
-    });
-}
-
 function inicializarFormularioPruebaManejo() {
     const form = document.getElementById('formPruebaManejo');
     if (form) {
@@ -272,5 +236,6 @@ function inicializarFormularioPruebaManejo() {
     }
 
 }
+
 
 
