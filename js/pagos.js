@@ -1,10 +1,10 @@
 // ============================================
-// GESTIÓN DE FORMAS DE PAGO (MEJORADO)
+// GESTIÓN DE FORMAS DE PAGO
 // ============================================
 
 function inicializarSistemaPagos() {
     cargarTarjetas();
-    generarOpcionesAno(); // Llenar select de años
+    generarOpcionesAno(); 
     
     const form = document.getElementById('formulario-tarjeta');
     if (form) {
@@ -14,13 +14,13 @@ function inicializarSistemaPagos() {
         });
     }
 
-    // Formatear input de tarjeta visualmente (espacios cada 4 números)
+    // Formatear input de tarjeta visualmente 
     const inputNumero = document.getElementById('numero-tarjeta');
     if (inputNumero) {
         inputNumero.addEventListener('input', function(e) {
-            let val = e.target.value.replace(/\D/g, ''); // Solo números
-            val = val.substring(0, 16); // Máximo 16 números
-            val = val.replace(/(.{4})/g, '$1 ').trim(); // Espacios
+            let val = e.target.value.replace(/\D/g, ''); // Solo se admitirán números
+            val = val.substring(0, 16); // Máximo 16
+            val = val.replace(/(.{4})/g, '$1 ').trim(); 
             e.target.value = val;
         });
     }
@@ -34,7 +34,7 @@ function inicializarSistemaPagos() {
     }
 }
 
-// Generar opciones para el select de Año (Año actual + 10)
+// Generamos opciones para el select de Año (Año actual + 10)
 function generarOpcionesAno() {
     const select = document.getElementById('ano-expiracion');
     if (!select) return;
@@ -67,7 +67,7 @@ function agregarTarjeta() {
         titular: titular.toUpperCase(),
         numeroOculto: `•••• ${numero.slice(-5)}`, // Solo guardamos el final para mostrar
         tipo: tipo,
-        // Guardamos fecha solo por si se necesitara lógica futura, pero no se mostrará
+        // Guardamos fecha 
         expiracion: `${mes}/${ano.slice(-2)}` 
     };
 
@@ -106,7 +106,7 @@ function cargarTarjetas() {
             if(t.tipo === 'Visa') icono = '<span style="color:#1a1f71; font-weight:900; font-style:italic;">VISA</span>';
             if(t.tipo === 'Mastercard') icono = '<span style="color:#eb001b; font-weight:bold;">MC</span>';
 
-            // AQUÍ ESTÁ LA CLAVE: No mostramos ni CVV ni Fecha, solo Titular y Últimos dígitos
+            //  Solo mostraremos Titular y Últimos dígitos
             div.innerHTML = `
                 <div class="info-tarjeta">
                     <span class="icono-tarjeta" style="font-size:20px; width:40px;">${icono}</span>
@@ -133,4 +133,5 @@ function eliminarTarjeta(id) {
     
     cargarTarjetas();
     mostrarNotificacion('🗑️ Tarjeta eliminada');
+
 }
