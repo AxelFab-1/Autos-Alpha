@@ -10,6 +10,7 @@ import {
 
 import { inicializarFavoritos } from './favoritos-firebase.js';
 import { inicializarContacto } from './contacto-firebase.js';
+import { inicializarContadorOferta } from './ofertas-firebase.js';
 
 // ============================================
 // FUNCIONES GLOBALES
@@ -68,6 +69,7 @@ function inicializarFuncionalidades() {
     inicializarModoOscuro();
     inicializarAnimacionesScroll();
     inicializarFormularioPruebaManejo();
+    inicializarContadorOferta();
 }
 
 // ============================================
@@ -221,3 +223,4 @@ function inicializarFormularioPruebaManejo() {
         });
     }
 }
+
