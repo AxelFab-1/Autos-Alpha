@@ -1220,8 +1220,13 @@ a:hover {
 
 .modo-oscuro #detalle-auto {
     background: #2d2d2d !important; 
-    color: #ffffff !important;      
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
 }
+
+.modo-oscuro .detalle-info h2 {
+    color: #e0e0e0 !important; 
+    border-bottom: 2px solid #555 !important; 
 
 
 /* ESTILOS PARA VENTANAS FLOTANTES */
@@ -1518,5 +1523,10 @@ a:hover {
 .modo-oscuro .caracteristica-item strong {
     color: #ffffff !important;
 }
+
+   .modo-oscuro .info-label {
+    color: #ffc107 !important; /* Mantiene el amarillo brillante si se usa como etiqueta */
+}
+
 
 
