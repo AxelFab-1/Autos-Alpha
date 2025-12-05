@@ -1,5 +1,5 @@
 // ============================================
-// SISTEMA DE FAVORITOS (AUTÓNOMO E INYECTABLE) ❤️
+// SISTEMA DE FAVORITOS 
 // ============================================
 
 import { db, auth, collection, addDoc, onSnapshot, deleteDoc, doc, query, where, onAuthStateChanged } from './firebase-config.js';
@@ -7,7 +7,6 @@ import { db, auth, collection, addDoc, onSnapshot, deleteDoc, doc, query, where,
 // Esta función se llama desde main.js
 export function inicializarFavoritos() {
     // 1. INYECCIÓN DE UI (DOM)
-    // Si el módulo falla o se quita, esto no ocurre y la web queda limpia
     inyectarSeccionFavoritos();
     inyectarBotonesCorazon();
 
@@ -25,7 +24,7 @@ export function inicializarFavoritos() {
             if(aviso) aviso.style.display = 'none';
             if(lista) lista.style.display = 'flex';
             
-            // Cargar datos
+            // Cargamos datos
             cargarFavoritosDeUsuario(user);
             
             // Definir qué hace el clic (Guardar)
@@ -45,10 +44,10 @@ export function inicializarFavoritos() {
     });
 }
 
-// --- FUNCIONES DE INYECCIÓN DOM (LO NUEVO) ---
+// --- FUNCIONES DE INYECCIÓN DOM ---
 
 function inyectarSeccionFavoritos() {
-    // Buscamos dónde insertarlo (después del índice es un buen lugar)
+    // Buscamos dónde insertarlo (después del índice)
     const indice = document.querySelector('.indice');
     if (!indice || document.getElementById('seccion-favoritos')) return; // Ya existe o no hay indice
 
@@ -75,20 +74,17 @@ function inyectarBotonesCorazon() {
         // Verificar si ya tiene corazón para no repetir
         if (front.querySelector('.boton-favorito')) return;
 
-        // Crear el botón manualmente
+        // Creamos el botón manualmente
         const btn = document.createElement('button');
         btn.className = 'boton-favorito';
         btn.innerHTML = '🤍';
-        
-        // Estilos necesarios para que flote (aunque ya están en CSS, esto asegura posición)
-        // Nota: Mejor si los estilos complejos están en CSS (.boton-favorito)
         
         // Obtener el nombre del modelo para el evento
         const nombreModelo = front.querySelector('.nombre-auto').textContent;
 
         // Evento Click
         btn.onclick = (e) => {
-            e.stopPropagation(); // Evitar que gire la tarjeta
+            e.stopPropagation(); 
             if(window.manejarClickCorazon) window.manejarClickCorazon(nombreModelo);
         };
 
@@ -97,7 +93,7 @@ function inyectarBotonesCorazon() {
     });
 }
 
-// --- LÓGICA DE DATOS (IGUAL QUE ANTES) ---
+// --- LÓGICA DE DATOS  ---
 
 function cargarFavoritosDeUsuario(user) {
     const lista = document.getElementById('lista-favoritos');
