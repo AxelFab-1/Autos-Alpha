@@ -1,115 +1,79 @@
 // ============================================
-// SISTEMA DE CITAS PRIVADAS (FIREBASE AUTH) 🔒
+// SISTEMA DE CITAS (CONECTADO Y PRIVADO) 📅
 // ============================================
 
 import { 
-    db, auth, provider, 
-    collection, addDoc, onSnapshot, deleteDoc, doc, 
-    signInWithPopup, signOut, onAuthStateChanged,
-    query, where 
+    db, auth, collection, addDoc, onSnapshot, deleteDoc, doc, query, where, onAuthStateChanged 
 } from './firebase-config.js';
 
-let usuarioActual = null; // Aquí guardaremos quién está conectado
-let escuchadorCitas = null; // Para apagar la conexión cuando te desconectas
-
+// --- INICIALIZACIÓN ---
 function inicializarCalendarioCitas() {
-    const btnLogin = document.getElementById('btn-login-google');
-    const btnLogout = document.getElementById('btn-logout');
-    
-    // 1. EVENTOS DE LOGIN/LOGOUT
-    if (btnLogin) btnLogin.addEventListener('click', iniciarSesion);
-    if (btnLogout) btnLogout.addEventListener('click', cerrarSesion);
+    const fechaInput = document.getElementById('fecha-cita');
+    const contenedorPrincipal = document.getElementById('contenido-calendario'); // El div que oculta todo
+    const avisoLogin = document.getElementById('pantalla-login'); // El aviso de "Inicia sesión"
 
-    // 2. DETECTAR CAMBIO DE ESTADO (¿Entró o salió alguien?)
+    if (!fechaInput) return;
+
+    // Configuración básica de fecha
+    const hoy = new Date().toISOString().split('T')[0];
+    fechaInput.min = hoy;
+
+    // 1. ESCUCHADOR DE SESIÓN (El Cerebro)
+    // Este código se ejecuta automáticamente cuando detecta que entraste con Google
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            // -- USUARIO CONECTADO --
-            usuarioActual = user;
-            console.log("Usuario conectado:", user.email);
+            // === USUARIO CONECTADO ===
+            console.log("Citas: Usuario detectado, cargando datos...");
             
-            // Mostrar interfaz
-            document.getElementById('pantalla-login').style.display = 'none';
-            document.getElementById('contenido-calendario').style.display = 'block';
-            document.getElementById('usuario-info').style.display = 'flex';
-            
-            // Llenar datos del header
-            document.getElementById('nombre-usuario').textContent = user.displayName.split(' ')[0]; // Solo primer nombre
-            document.getElementById('foto-usuario').src = user.photoURL;
+            // Mostrar la interfaz del calendario
+            if(contenedorPrincipal) contenedorPrincipal.style.display = 'block';
+            if(avisoLogin) avisoLogin.style.display = 'none';
 
-            // Pre-llenar el nombre en el formulario
+            // Pre-llenar el nombre en el formulario (UX Pro)
             const inputNombre = document.getElementById('cita-nombre');
-            if(inputNombre) inputNombre.value = user.displayName;
+            if(inputNombre && user.displayName) inputNombre.value = user.displayName;
 
-            // Cargar SUS citas
+            // CARGAR SUS CITAS
             cargarCitasPrivadas(user.uid);
 
-        } else {
-            // -- USUARIO DESCONECTADO --
-            usuarioActual = null;
-            console.log("Nadie conectado");
-
-            // Ocultar interfaz
-            document.getElementById('pantalla-login').style.display = 'block';
-            document.getElementById('contenido-calendario').style.display = 'none';
-            document.getElementById('usuario-info').style.display = 'none';
-
-            // Dejar de escuchar citas (seguridad y rendimiento)
-            if (escuchadorCitas) {
-                escuchadorCitas(); // Esto "apaga" el onSnapshot anterior
-                escuchadorCitas = null;
+            // Activar el botón de guardar
+            const formCita = document.getElementById('formCita');
+            if (formCita) {
+                formCita.onsubmit = (e) => {
+                    e.preventDefault();
+                    guardarCitaNube(user); // Pasamos el usuario para usar su ID
+                };
             }
+
+        } else {
+            // === USUARIO DESCONECTADO ===
+            console.log("Citas: No hay usuario.");
+            
+            // Ocultar calendario y mostrar aviso
+            if(contenedorPrincipal) contenedorPrincipal.style.display = 'none';
+            if(avisoLogin) avisoLogin.style.display = 'block';
+            
+            // Limpiar la lista visual por seguridad
+            document.getElementById('mis-citas-guardadas').innerHTML = '';
         }
     });
 
-    // Eventos del formulario (igual que antes)
-    const fechaInput = document.getElementById('fecha-cita');
-    if(fechaInput) {
-        const hoy = new Date().toISOString().split('T')[0];
-        fechaInput.min = hoy;
-        fechaInput.addEventListener('change', function() { generarHorarios(this.value); });
-    }
-
-    const formCita = document.getElementById('formCita');
-    if (formCita) {
-        formCita.addEventListener('submit', function(e) {
-            e.preventDefault();
-            guardarCitaPrivada();
-        });
-    }
+    // Evento visual de cambio de fecha
+    fechaInput.addEventListener('change', function() {
+        generarHorarios(this.value);
+    });
 }
 
-// --- FUNCIONES DE AUTH ---
-async function iniciarSesion() {
-    try {
-        await signInWithPopup(auth, provider);
-        // No hace falta hacer nada más, onAuthStateChanged se disparará solo
-    } catch (error) {
-        console.error("Error login:", error);
-        alert("Error al iniciar sesión: " + error.message);
-    }
-}
-
-async function cerrarSesion() {
-    try {
-        await signOut(auth);
-        alert("Sesión cerrada correctamente 👋");
-    } catch (error) {
-        console.error("Error logout:", error);
-    }
-}
-
-// --- CARGAR CITAS (CON FILTRO DE DUEÑO) ---
+// --- CARGAR CITAS (Solo las mías) ---
 function cargarCitasPrivadas(uid) {
     const contenedor = document.getElementById('mis-citas-guardadas');
-    
-    // REFERENCIA A LA COLECCIÓN
-    const citasRef = collection(db, "citas");
-    
-    // CREAMOS LA QUERY: "Solo dame las citas donde el campo 'uid' sea igual a MI ID"
-    const q = query(citasRef, where("uid", "==", uid));
+    if(!contenedor) return;
 
-    // SUSCRIPCIÓN EN TIEMPO REAL
-    escuchadorCitas = onSnapshot(q, (snapshot) => {
+    // QUERY: Dame las citas donde el campo "uid" sea igual a MI ID
+    const q = query(collection(db, "citas"), where("uid", "==", uid));
+
+    // Suscripción en tiempo real
+    onSnapshot(q, (snapshot) => {
         contenedor.innerHTML = '';
         const citas = [];
         
@@ -118,49 +82,54 @@ function cargarCitasPrivadas(uid) {
         });
 
         if (citas.length === 0) {
-            contenedor.innerHTML = '<p style="color:#666; text-align:center; font-style:italic;">No tienes citas agendadas aún.</p>';
+            contenedor.innerHTML = `
+                <p style="color: var(--color-texto, #666); font-style: italic; font-size: 14px; text-align:center; opacity: 0.7;">
+                    No tienes citas programadas.
+                </p>`;
             return;
         }
 
-        // Ordenar
+        // Ordenar por fecha
         citas.sort((a, b) => new Date(a.fecha + 'T' + a.hora) - new Date(b.fecha + 'T' + b.hora));
-
-        // Renderizar
+        
         citas.forEach(cita => {
             const div = document.createElement('div');
-            div.className = 'cita-card';
+            div.className = 'cita-card'; // Clase CSS para modo oscuro
+            
             div.innerHTML = `
                 <div>
                     <div class="cita-texto">
-                        📅 ${cita.fecha} <span style="color:#a83246; margin-left:5px;">⏰ ${cita.hora}</span>
+                        📅 ${cita.fecha} <span style="color:#a83246; margin-left:5px; background:rgba(168, 50, 70, 0.1); padding:2px 6px; border-radius:4px;">⏰ ${cita.hora}</span>
                     </div>
                     <div class="cita-subtexto">
                         <strong>${cita.motivo}</strong> - ${cita.nombre}
                     </div>
                 </div>
-                <button onclick="borrarCita('${cita.id}')" 
-                        style="background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">
+                <button class="btn-borrar-cita" data-id="${cita.id}" 
+                        style="background: #e74c3c; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight:bold;">
                     Cancelar
                 </button>
             `;
             contenedor.appendChild(div);
         });
+
+        // Eventos de borrar
+        document.querySelectorAll('.btn-borrar-cita').forEach(btn => {
+            btn.addEventListener('click', () => cancelarCitaNube(btn.dataset.id));
+        });
     });
 }
 
-// --- GUARDAR CITA (CON MARCA DE DUEÑO) ---
-async function guardarCitaPrivada() {
-    if (!usuarioActual) {
-        alert("Debes iniciar sesión para agendar.");
-        return;
-    }
-
+// --- GUARDAR CITA ---
+async function guardarCitaNube(user) {
     const form = document.getElementById('formCita');
-    const fecha = form.dataset.fecha;
+    
+    // Leer los datos que guardamos temporalmente en el formulario
+    const fecha = form.dataset.fecha; 
     const hora = form.dataset.hora;
 
     if (!fecha || !hora) {
-        alert("Selecciona un horario primero.");
+        alert("⚠️ Por favor selecciona un horario primero.");
         return;
     }
 
@@ -170,17 +139,19 @@ async function guardarCitaPrivada() {
 
     try {
         await addDoc(collection(db, "citas"), {
-            uid: usuarioActual.uid, // <--- ¡ESTO ES LO IMPORTANTE! LA MARCA DE PROPIEDAD
-            email: usuarioActual.email, // Opcional: para que sepas quién fue en la consola
-            fecha,
-            hora,
-            nombre,
-            telefono,
-            motivo,
-            creadoEn: new Date()
+            uid: user.uid, // <--- LA LLAVE DE LA PRIVACIDAD
+            email: user.email, // Opcional, útil para debug
+            fecha: fecha,
+            hora: hora,
+            nombre: nombre,
+            telefono: telefono,
+            motivo: motivo,
+            timestamp: new Date()
         });
 
-        alert("✅ Cita agendada exitosamente en tu cuenta.");
+        // Usamos window.mostrarNotificacion porque está en main.js
+        if(window.mostrarNotificacion) window.mostrarNotificacion("✅ ¡Cita agendada!");
+        else alert("✅ Cita agendada");
         
         // Limpiar
         form.reset();
@@ -189,20 +160,21 @@ async function guardarCitaPrivada() {
         document.getElementById('fecha-cita').value = '';
 
     } catch (e) {
-        console.error("Error guardando:", e);
-        alert("Error al guardar cita.");
+        console.error("Error al guardar: ", e);
+        alert("❌ Error al guardar.");
     }
 }
 
-// --- BORRAR ---
-window.borrarCita = async (id) => {
-    if(!confirm("¿Cancelar cita?")) return;
+// --- BORRAR CITA ---
+async function cancelarCitaNube(id) {
+    if(!confirm('¿Cancelar esta cita?')) return;
     try {
         await deleteDoc(doc(db, "citas", id));
+        if(window.mostrarNotificacion) window.mostrarNotificacion('🗑️ Cita eliminada');
     } catch (e) { console.error(e); }
-};
+}
 
-// --- GENERADOR VISUAL (IGUAL QUE ANTES) ---
+// --- GENERAR HORARIOS (VISUAL) ---
 function generarHorarios(fecha) {
     const contenedor = document.getElementById('horarios-disponibles');
     const formDiv = document.getElementById('formulario-cita');
@@ -224,8 +196,11 @@ function generarHorarios(fecha) {
             btn.onclick = () => {
                 document.querySelectorAll('.horario-btn').forEach(b => b.classList.remove('seleccionado'));
                 btn.classList.add('seleccionado');
+                
                 formDiv.style.display = 'block';
                 formDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+                // Guardamos en el dataset del FORMULARIO (que es el que leemos al guardar)
                 formTag.dataset.fecha = fecha;
                 formTag.dataset.hora = hora;
             };
@@ -234,5 +209,5 @@ function generarHorarios(fecha) {
     }
 }
 
-// Arrancar
+// Iniciar script
 inicializarCalendarioCitas();
