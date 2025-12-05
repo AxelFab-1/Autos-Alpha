@@ -1512,5 +1512,11 @@ a:hover {
     color: #ffffff !important; 
 }
 
+.modo-oscuro .especificacion-item span,
+.modo-oscuro .especificacion-item strong,
+.modo-oscuro .caracteristica-item span,
+.modo-oscuro .caracteristica-item strong {
+    color: #ffffff !important;
+}
 
 
