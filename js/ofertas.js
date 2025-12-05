@@ -6,7 +6,7 @@ function inicializarContadorOferta() {
     const contenedor = document.querySelector('.contador-tiempo');
     if (!contenedor) return;
 
-    // Calculamos el último día del mes actual automáticamente
+    // Calculamos el último día del mes actual de forma automática
     const ahora = new Date();
     const finDeMes = new Date(ahora.getFullYear(), ahora.getMonth() + 1, 0);
     finDeMes.setHours(23, 59, 59, 999);
@@ -16,7 +16,7 @@ function inicializarContadorOferta() {
         const diferencia = finDeMes - actual;
 
         if (diferencia <= 0) {
-            // Si la oferta terminó
+            // Solo si la oferta terminó
             document.getElementById('dias').innerText = "00";
             document.getElementById('horas').innerText = "00";
             document.getElementById('minutos').innerText = "00";
@@ -37,5 +37,6 @@ function inicializarContadorOferta() {
     }
 
     setInterval(actualizar, 1000);
-    actualizar(); // Ejecutar inmediatamente
+    actualizar(); 
+
 }
