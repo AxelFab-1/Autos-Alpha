@@ -117,12 +117,16 @@ function actualizarContadorUI(numero) {
             border-radius: 10px; 
             font-size: 12px; 
             z-index: 90;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
         `;
         header.appendChild(div);
     }
 
     // Solo actualizamos el texto
     if (div) {
+        div.style.transform = "scale(1.2)";
+        setTimeout(() => div.style.transform = "scale(1)", 200);
         div.innerHTML = `👥 Visitantes: ${numero.toLocaleString()}`;
     }
 }
@@ -268,4 +272,5 @@ function inicializarFormularioPruebaManejo() {
     }
 
 }
+
 
