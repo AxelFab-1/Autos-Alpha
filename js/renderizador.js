@@ -26,7 +26,7 @@ function renderizarCatalogo() {
                             <div class="info-item"><span class="info-label">Precio:</span> ${auto.precio}</div>
                             
                             <button onclick="event.stopPropagation(); mostrarDetalleAuto('${idAuto}')" 
-                                    style="margin-top: 15px; background: white; color: #a72146; border: none; padding: 5px 15px; border-radius: 20px; font-weight: bold; cursor: pointer;">
+                                    style="margin-top: 15px; background: white; color: #a83246; border: none; padding: 5px 15px; border-radius: 20px; font-weight: bold; cursor: pointer;">
                                 + Ver Detalle
                             </button>
                         </div>
@@ -63,6 +63,7 @@ function renderizarCatalogo() {
     });
 
 }
+
 
 
 
