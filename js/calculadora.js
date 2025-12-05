@@ -8,7 +8,19 @@ function calcularFinanciamiento() {
     const enganchePorcentaje = parseFloat(document.getElementById('enganche-porcentaje').value);
     const plazo = parseInt(document.getElementById('plazo-meses').value);
     const tasaAnual = parseFloat(document.getElementById('tasa-interes').value);
-    
+
+if (precio < 10000 || isNaN(precio)) { 
+        const resultado = document.getElementById('resultado-financiamiento');
+        resultado.innerHTML = `
+            <div style="background: #fce7e7; padding: 20px; border-radius: 8px; color: #e74c3c; border-left: 4px solid #e74c3c;">
+                <h3 style="margin-top: 0; color: #c0392b;" class="resultado-titulo">Error de Cálculo</h3>
+                <p>Por favor, introduzca un precio de vehículo válido (mínimo $10,000) y asegúrese de que todos los campos estén llenos.</p>
+            </div>
+        `;
+        return; 
+    }
+   
+
     const enganche = precio * (enganchePorcentaje / 100);
     const montoFinanciar = precio - enganche;
     const tasaMensual = (tasaAnual / 100) / 12;
@@ -74,4 +86,5 @@ function calcularFinanciamientoAuto(autoId) {
             </div>
         </div>
     `;
+
 }
