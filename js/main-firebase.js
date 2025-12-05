@@ -11,6 +11,7 @@ import {
 import { inicializarFavoritos } from './favoritos-firebase.js';
 import { inicializarContacto } from './contacto-firebase.js';
 import { inicializarContadorOferta } from './ofertas-firebase.js';
+import { inicializarSistemaPagos } from './pagos-firebase.js';
 
 // ============================================
 // FUNCIONES GLOBALES
@@ -58,7 +59,8 @@ window.addEventListener('load', function() {
 function inicializarFuncionalidades() {  
     // --- 1. Módulos de Firebase ---
     inicializarFavoritos();
-    inicializarContacto(); // El cuestionario
+    inicializarContacto();
+    inicializarSistemaPagos();
     
     // --- 2. Login y Contador ---
     configurarLoginGlobal();
@@ -223,4 +225,5 @@ function inicializarFormularioPruebaManejo() {
         });
     }
 }
+
 
