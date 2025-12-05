@@ -55,17 +55,20 @@ window.addEventListener('load', function() {
 
 function inicializarFuncionalidades() {  
     // Herramientas visuales
-    if (typeof inicializarFiltros === 'function') 
-    inicializarContadorGlobal();
-    configurarLoginGlobal();
-    inicializarFiltros();
+    if (typeof inicializarFiltros === 'function') inicializarFiltros();
     inicializarModoOscuro();
     inicializarAnimacionesScroll();
     inicializarValidacionFormulario();
     inicializarFormularioPruebaManejo();
     inicializarFavoritos();
-    inicializarContacto();
+
+    // Firebase
+    configurarLoginGlobal();
+    
+    // --- AQUÍ ESTÁ EL NUEVO CONTADOR GLOBAL ---
+    inicializarContadorGlobal(); 
 }
+inicializarContacto();
 
 // ============================================
 // NUEVO: CONTADOR DE VISITAS GLOBAL (EN LA NUBE) ☁️
@@ -236,6 +239,4 @@ function inicializarFormularioPruebaManejo() {
     }
 
 }
-
-
 
