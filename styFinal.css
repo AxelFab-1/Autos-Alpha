@@ -617,7 +617,7 @@ a:hover {
     max-width: 90%;
     width: 500px;
     max-height: 90vh;
-    overflow: hidden;
+    overflow: visible;
     animation: modalAppear 0.3s ease-out;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -671,11 +671,15 @@ a:hover {
 
 .modal-content {
     padding: 25px;
+    /* Le damos 50px extra abajo para que los selects no choquen con el borde */
+    padding-bottom: 50px; 
     max-height: calc(90vh - 80px);
     overflow-y: auto;
     transition: background-color 0.3s ease, color 0.3s ease;
+    
+    /* Redondeamos las esquinas aquí ya que se lo quitamos al padre */
+    border-radius: 0 0 15px 15px; 
 }
-
 .boton-modal {
     background: #a83246;
     color: white;
@@ -1520,6 +1524,7 @@ a:hover {
 .modo-oscuro .caracteristica-item strong {
     color: #ffffff !important;
 }
+
 
 
 
