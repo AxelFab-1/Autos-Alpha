@@ -1,8 +1,8 @@
 // ============================================
-// MAIN.JS - CEREBRO CENTRAL (CORREGIDO)
+// MAIN.JS - CEREBRO CENTRAL (FINAL)
 // ============================================
 
-// 1. IMPORTACIONES DE FIREBASE
+// 1. IMPORTACIONES
 import { 
     auth, provider, signInWithPopup, signOut, onAuthStateChanged,
     db, doc, updateDoc, setDoc, increment, onSnapshot 
@@ -10,7 +10,6 @@ import {
 
 import { inicializarFavoritos } from './favoritos-firebase.js';
 import { inicializarContacto } from './contacto-firebase.js';
-import { inicializarSistemaPagos } from './pagos-firebase.js'; // <--- AGREGADO
 
 // ============================================
 // FUNCIONES GLOBALES
@@ -58,28 +57,25 @@ window.addEventListener('load', function() {
 function inicializarFuncionalidades() {  
     // --- 1. Módulos de Firebase ---
     inicializarFavoritos();
-    inicializarContacto();      // <--- AHORA ESTÁ EN SU LUGAR CORRECTO ✅
-    inicializarSistemaPagos();  // <--- Y PAGOS TAMBIÉN ✅
+    inicializarContacto(); // El cuestionario
     
     // --- 2. Login y Contador ---
     configurarLoginGlobal();
     inicializarContadorGlobal(); 
 
-    // --- 3. Herramientas Visuales ---
+    // --- 3. Herramientas Visuales (Legacy) ---
     if (typeof inicializarFiltros === 'function') inicializarFiltros();
     inicializarModoOscuro();
     inicializarAnimacionesScroll();
-    // Nota: inicializarValidacionFormulario() SE BORRA porque inicializarContacto() ya hace eso mejor.
     inicializarFormularioPruebaManejo();
 }
 
 // ============================================
-// NUEVO: CONTADOR DE VISITAS GLOBAL
+// CONTADOR DE VISITAS GLOBAL (TU DISEÑO VERDE) 🟢
 // ============================================
 async function inicializarContadorGlobal() {
     const docRef = doc(db, "estadisticas", "visitas");
 
-    // 1. Sumar visita (Sin sessionStorage para la feria)
     try {
         await updateDoc(docRef, { total: increment(1) });
         console.log("Visita +1 enviada a la nube");
@@ -89,7 +85,6 @@ async function inicializarContadorGlobal() {
         }
     }
 
-    // 2. Escuchar cambios
     onSnapshot(docRef, (docSnap) => {
         if (docSnap.exists()) {
             actualizarContadorUI(docSnap.data().total);
@@ -101,7 +96,6 @@ function actualizarContadorUI(numero) {
     const header = document.querySelector('.header-container');
     let div = document.getElementById('contador-visitas');
 
-    // Si no existe (porque lo borraste del HTML), lo creamos con TU diseño verde
     if (!div && header) {
         div = document.createElement('div');
         div.id = 'contador-visitas';
@@ -160,7 +154,7 @@ function configurarLoginGlobal() {
 }
 
 // ============================================
-// FUNCIONES VISUALES LEGACY
+// FUNCIONES VISUALES
 // ============================================
 
 function inicializarAnimacionesScroll() {
