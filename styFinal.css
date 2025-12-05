@@ -1485,4 +1485,27 @@ a:hover {
 }
 
 
+/* 1. Tarjetas de Especificaciones y Características (Fondo e Inputs) */
+.modo-oscuro .especificacion-item,
+.modo-oscuro .caracteristica-item {
+    background: #3d3d3d !important; /* Fondo oscuro (el mismo de los inputs) */
+    color: #ffffff !important;      /* Texto blanco puro */
+    border-color: #555 !important;  /* Borde oscuro */
+}
+
+/* 2. Arreglar Títulos, Precios y Descripción */
+.modo-oscuro .detalle-info h1, 
+.modo-oscuro .precio-detalle,
+.modo-oscuro .detalle-info p {
+    color: #ffffff !important; /* Asegura que el título, precio y descripción sean blancos */
+}
+
+/* 3. Arreglar la línea divisoria del título de especificaciones */
+.modo-oscuro .detalle-info h2 {
+    color: #ffffff !important;
+    border-bottom: 2px solid #555 !important; /* Color oscuro para la línea */
+}
+
+
+
 
