@@ -17,7 +17,7 @@ export function inicializarContacto() {
         const user = auth.currentUser;
         if (!user) {
             alert("Para enviar el cuestionario, por favor inicia sesión.");
-            document.querySelector('.header-container').scrollIntoView({ behavior: 'smooth' }); */
+            document.querySelector('.header-container').scrollIntoView({ behavior: 'smooth' });
             return;
         }
 
