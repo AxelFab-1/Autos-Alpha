@@ -1,5 +1,5 @@
 // ============================================
-// MAIN.JS - CEREBRO CENTRAL (CON CONTADOR GLOBAL)
+// MAIN.JS - CEREBRO CENTRAL (CORREGIDO)
 // ============================================
 
 // 1. IMPORTACIONES DE FIREBASE
@@ -10,6 +10,8 @@ import {
 
 import { inicializarFavoritos } from './favoritos-firebase.js';
 import { inicializarContacto } from './contacto-firebase.js';
+import { inicializarSistemaPagos } from './pagos-firebase.js'; // <--- AGREGADO
+
 // ============================================
 // FUNCIONES GLOBALES
 // ============================================
@@ -54,44 +56,43 @@ window.addEventListener('load', function() {
 });
 
 function inicializarFuncionalidades() {  
-    // Herramientas visuales
+    // --- 1. Módulos de Firebase ---
+    inicializarFavoritos();
+    inicializarContacto();      // <--- AHORA ESTÁ EN SU LUGAR CORRECTO ✅
+    inicializarSistemaPagos();  // <--- Y PAGOS TAMBIÉN ✅
+    
+    // --- 2. Login y Contador ---
+    configurarLoginGlobal();
+    inicializarContadorGlobal(); 
+
+    // --- 3. Herramientas Visuales ---
     if (typeof inicializarFiltros === 'function') inicializarFiltros();
     inicializarModoOscuro();
     inicializarAnimacionesScroll();
-    inicializarValidacionFormulario();
+    // Nota: inicializarValidacionFormulario() SE BORRA porque inicializarContacto() ya hace eso mejor.
     inicializarFormularioPruebaManejo();
-    inicializarFavoritos();
-    configurarLoginGlobal();
-    inicializarContadorGlobal(); 
-    inicializarContacto();
 }
 
-
 // ============================================
-// NUEVO: CONTADOR DE VISITAS GLOBAL (EN LA NUBE) ☁️
+// NUEVO: CONTADOR DE VISITAS GLOBAL
 // ============================================
 async function inicializarContadorGlobal() {
-    const docRef = doc(db, "estadisticas", "visitas"); // Ruta: estadisticas/visitas
+    const docRef = doc(db, "estadisticas", "visitas");
 
-    // 1. Sumar visita (Solo una vez por sesión del navegador)
-    if (!sessionStorage.getItem('visita_registrada')) {
-        try {
-            await updateDoc(docRef, { total: increment(1) });
-            sessionStorage.setItem('visita_registrada', 'true');
-            console.log("Visita +1 enviada a la nube");
-        } catch (error) {
-            // Si el documento no existe (primera vez en la historia), lo creamos
-            if (error.code === 'not-found' || error.message.includes('No document')) {
-                await setDoc(docRef, { total: 1 });
-            }
+    // 1. Sumar visita (Sin sessionStorage para la feria)
+    try {
+        await updateDoc(docRef, { total: increment(1) });
+        console.log("Visita +1 enviada a la nube");
+    } catch (error) {
+        if (error.code === 'not-found' || error.message.includes('No document')) {
+            await setDoc(docRef, { total: 1 });
         }
     }
 
-    // 2. Escuchar cambios en tiempo real (Para todos)
+    // 2. Escuchar cambios
     onSnapshot(docRef, (docSnap) => {
         if (docSnap.exists()) {
-            const total = docSnap.data().total;
-            actualizarContadorUI(total);
+            actualizarContadorUI(docSnap.data().total);
         }
     });
 }
@@ -100,31 +101,22 @@ function actualizarContadorUI(numero) {
     const header = document.querySelector('.header-container');
     let div = document.getElementById('contador-visitas');
 
-    // Si por error borraste el HTML, JS lo crea con TU diseño original (Respaldo)
+    // Si no existe (porque lo borraste del HTML), lo creamos con TU diseño verde
     if (!div && header) {
         div = document.createElement('div');
         div.id = 'contador-visitas';
-        // AQUÍ ESTÁN TUS ESTILOS ORIGINALES RESTAURADOS:
         div.style.cssText = `
-            position: absolute; 
-            top: 10px; 
-            right: 300px; 
-            background: #27ae60; 
-            color: white; 
-            padding: 5px 10px; 
-            border-radius: 10px; 
-            font-size: 12px; 
-            z-index: 90;
+            position: absolute; top: 10px; right: 300px; 
+            background: #27ae60; color: white; 
+            padding: 5px 10px; border-radius: 10px; 
+            font-size: 12px; z-index: 90;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
         `;
         header.appendChild(div);
     }
 
-    // Solo actualizamos el texto
     if (div) {
-        div.style.transform = "scale(1.2)";
-        setTimeout(() => div.style.transform = "scale(1)", 200);
         div.innerHTML = `👥 Visitantes: ${numero.toLocaleString()}`;
     }
 }
@@ -234,7 +226,4 @@ function inicializarFormularioPruebaManejo() {
             this.reset();
         });
     }
-
 }
-
-
