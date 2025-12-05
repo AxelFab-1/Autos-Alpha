@@ -12,6 +12,7 @@ import { inicializarFavoritos } from './favoritos-firebase.js';
 import { inicializarContacto } from './contacto-firebase.js';
 import { inicializarContadorOferta } from './ofertas-firebase.js';
 import { inicializarSistemaPagos } from './pagos-firebase.js';
+import { inicializarPruebaManejo } from './prueba-manejo-firebase.js';
 
 // ============================================
 // FUNCIONES GLOBALES
@@ -61,6 +62,7 @@ function inicializarFuncionalidades() {
     inicializarFavoritos();
     inicializarContacto();
     inicializarSistemaPagos();
+    inicializarPruebaManejo();
     
     // --- 2. Login y Contador ---
     configurarLoginGlobal();
@@ -214,16 +216,6 @@ function desactivarModoOscuro() {
     localStorage.setItem('modo-oscuro', 'false');
 }
 
-function inicializarFormularioPruebaManejo() {
-    const form = document.getElementById('formPruebaManejo');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            window.mostrarNotificacion('✅ ¡Prueba de manejo agendada!');
-            if(window.cerrarModal) window.cerrarModal();
-            this.reset();
-        });
-    }
-}
+
 
 
