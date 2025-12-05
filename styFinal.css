@@ -1217,6 +1217,13 @@ a:hover {
     color: #ffffff !important;  
 }
 
+
+.modo-oscuro #detalle-auto {
+    background: #2d2d2d !important; 
+    color: #ffffff !important;      
+}
+
+
 /* ESTILOS PARA VENTANAS FLOTANTES */
 .modo-oscuro .modal {
     background: #2d2d2d !important;
@@ -1476,5 +1483,6 @@ a:hover {
     }
 
 }
+
 
 
