@@ -104,65 +104,65 @@
     </div>
 
     <div class="modal" id="modalPruebaManejo">
-        <div class="modal-header">
-            <h3>🚗 Agenda tu Prueba de Manejo</h3>
-            <button class="close-modal" onclick="cerrarModal()">&times;</button>
-        </div>
-        <div class="modal-content">
-            <p>¡Experimenta la emoción de manejar tu próximo vehículo!</p>
-            
-            <form id="formPruebaManejo" style="margin-top: 20px;">
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Nombre completo:</label>
-                    <input type="text" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" 
-                           placeholder="Tu nombre" required>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Teléfono:</label>
-                    <input type="tel" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" 
-                           placeholder="Tu teléfono" required>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Vehículo de interés:</label>
-                    <select style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
-                        <option value="">Selecciona un modelo</option>
-                        <option value="corolla">Toyota Corolla</option>
-                        <option value="camry">Toyota Camry</option>
-                        <option value="civic">Honda Civic</option>
-                        <option value="crv">Honda CR-V</option>
-                        <option value="mustang">Ford Mustang</option>
-                        <option value="f150">Ford F-150</option>
-                    </select>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Fecha preferida:</label>
-                    <input type="date" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" 
-                           required>
-                </div>
-                
-                <button type="submit" class="boton-modal" style="width: 100%;">
-                    ✅ Agendar Prueba de Manejo
-                </button>
-            </form>
-        </div>
+    <div class="modal-header">
+        <h3>🚗 Agenda tu Prueba de Manejo</h3>
+        <button class="close-modal" onclick="cerrarModal()">&times;</button>
     </div>
-
+    <div class="modal-content">
+        <p>¡Experimenta la emoción de manejar tu próximo vehículo!</p>
+        
+        <form id="formPruebaManejo" style="margin-top: 20px;">
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Nombre completo:</label>
+                <input type="text" id="pm-nombre" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" 
+                       placeholder="Tu nombre" required>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Teléfono:</label>
+                <input type="tel" id="pm-telefono" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" 
+                       placeholder="Tu teléfono" required>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Vehículo de interés:</label>
+                <select id="pm-vehiculo" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                    <option value="">Selecciona un modelo</option>
+                    <option value="Toyota Corolla">Toyota Corolla</option>
+                    <option value="Toyota Camry">Toyota Camry</option>
+                    <option value="Honda Civic">Honda Civic</option>
+                    <option value="Honda CR-V">Honda CR-V</option>
+                    <option value="Ford Mustang">Ford Mustang</option>
+                    <option value="Ford F-150">Ford F-150</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Fecha preferida:</label>
+                <input type="date" id="pm-fecha" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" 
+                       required>
+            </div>
+            
+            <button type="submit" class="boton-modal" style="width: 100%;">
+                ✅ Solicitar Prueba
+            </button>
+        </form>
+    </div>
+</div>
+    
     <div class="modal" id="modalPagos">
     <div class="modal-header">
         <h3>💳 Gestión de Pagos</h3>
         <button class="close-modal" onclick="cerrarModal()">&times;</button>
     </div>
-    <div class="modal-content">
+    <div class="modl-content">
         <div class="sistema-pagos">
             <h4>Mis Tarjetas Guardadas</h4>
             <div id="lista-tarjetas">
                 </div>
             
             <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ddd;">
-
+a
             <h4 style="color: #a83246;">Agregar Nueva Tarjeta</h4>
             <form id="formulario-tarjeta">
                 <div style="margin-bottom: 15px;">
