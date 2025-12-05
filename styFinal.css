@@ -1211,6 +1211,12 @@ a:hover {
     background: #a83246 !important;
 }
 
+
+.modo-oscuro .calculadora {   
+    background-color: #2d2d2d !important;
+    color: #e0e0e0 !important;  
+}
+
 /* ESTILOS PARA VENTANAS FLOTANTES */
 .modo-oscuro .modal {
     background: #2d2d2d !important;
@@ -1470,3 +1476,4 @@ a:hover {
     }
 
 }
+
