@@ -1167,6 +1167,10 @@ a:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
+.modo-oscuro .flip-card-back {    
+    color: white !important; 
+}
+
 .modo-oscuro .flip-card-back a {
     color: #ffd700 !important; 
     font-weight: bold !important;
@@ -1525,6 +1529,7 @@ a:hover {
 .modo-oscuro .caracteristica-item strong {
     color: #ffffff !important;
 }
+
 
 
 
