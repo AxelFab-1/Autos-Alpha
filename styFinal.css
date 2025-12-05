@@ -1506,6 +1506,11 @@ a:hover {
     border-bottom: 2px solid #555 !important; /* Color oscuro para la línea */
 }
 
+.modo-oscuro .calculadora-item label,
+.modo-oscuro .cuestionario label,
+.modo-oscuro .modal-content form label {
+    color: #ffffff !important; 
+}
 
 
 
