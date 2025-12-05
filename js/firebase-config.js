@@ -1,6 +1,10 @@
 // js/firebase-config.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc } 
+// Agregamos funciones de Auth
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+// Agregamos funciones de Query (where, query)
+import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, where } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // --- PEGA AQUÍ TUS DATOS DE FIREBASE ---
@@ -16,5 +20,13 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
-export { db, collection, addDoc, onSnapshot, deleteDoc, doc };
+// Exportamos todo lo nuevo
+export { 
+    db, auth, provider, 
+    collection, addDoc, onSnapshot, deleteDoc, doc, 
+    signInWithPopup, signOut, onAuthStateChanged,
+    query, where // Importante para filtrar
+};
