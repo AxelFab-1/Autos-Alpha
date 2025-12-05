@@ -40,7 +40,7 @@ export function inicializarFavoritos() {
             limpiarCorazones();
             
             // Definir qué hace el clic (Pedir login)
-            window.manejarClickCorazon = () => alert("🔒 Inicia sesión arriba para agregar favoritos.");
+            window.manejarClickCorazon = () => alert("🔒 Inicia sesión para agregar favoritos.");
         }
     });
 }
@@ -56,7 +56,7 @@ function inyectarSeccionFavoritos() {
         <div class="favoritos-section" id="seccion-favoritos" style="margin: 30px 0; display: none;">
             <h2 style="color: #a83246;">❤️ Mis Vehículos Favoritos</h2>
             <div id="aviso-favoritos" style="text-align: center; color: #666; padding: 20px;">
-                🔒 Inicia sesión para ver y guardar tus favoritos.
+                Inicia sesión para ver y guardar tus favoritos.
             </div>
             <div id="lista-favoritos" style="display: none; flex-wrap: wrap; gap: 15px; padding: 15px; background: #f8f9fa; border-radius: 5px; min-height: 50px;">
                 </div>
