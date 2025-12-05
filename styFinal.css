@@ -1168,14 +1168,11 @@ a:hover {
 }
 
 .modo-oscuro .flip-card-back {    
+    font-weight: bold !important;
+    text-decoration: underline !important;
     color: white !important; 
 }
 
-.modo-oscuro .flip-card-back a {
-    color: #ffd700 !important; 
-    font-weight: bold !important;
-    text-decoration: underline !important; 
-}
 
 .modo-oscuro .nombre-auto {
     color: #e0e0e0 !important;
@@ -1529,6 +1526,7 @@ a:hover {
 .modo-oscuro .caracteristica-item strong {
     color: #ffffff !important;
 }
+
 
 
 
